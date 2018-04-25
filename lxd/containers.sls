@@ -66,7 +66,7 @@ lxd_container_{{ remotename }}_{{ name }}_touch_executed:
     {%- else %}
         - m_name: "{{ name }}"
     {%- endif %}
-        - cmd: [ 'touch', '/etc/salt_lxd_bootstraped']
+        - cmd: [ 'touch', '/etc/salt_lxd_bootstrapped']
         - remote_addr: "{{ remote.remote_addr }}"
         - cert: "{{ remote.cert }}"
         - key: "{{ remote.key }}"
@@ -87,8 +87,8 @@ lxd_container_{{ remotename }}_{{ name }}_check_executed:
     {%- else %}
         - m_name: "{{ name }}"
     {%- endif %}
-        - src: "/etc/salt_lxd_bootstraped"
-        - dst: "/tmp/salt_lxd_bootstraped_{{ remotename }}_{{ name }}"
+        - src: "/etc/salt_lxd_bootstrapped"
+        - dst: "/tmp/salt_lxd_bootstrapped_{{ remotename }}_{{ name }}"
         - uid: 0
         - gid: 0
         - overwrite: True
@@ -125,7 +125,7 @@ lxd_container_{{ remotename }}_{{ name }}_bsc_{{ loop.index }}:
             - lxd_container: lxd_container_{{ remotename }}_{{ name }}
         # Do not run if there is True in the marker file (bootstrap already executed)
         - unless:
-            - "grep -s -q True /tmp/salt_lxd_bootstraped_{{ remotename }}_{{ name }}"
+            - "grep -s -q True /tmp/salt_lxd_bootstrapped_{{ remotename }}_{{ name }}"
       {%- endif %}
 
 lxd_container_{{ remotename }}_{{ name }}_bse_{{ loop.index }}:
@@ -148,7 +148,7 @@ lxd_container_{{ remotename }}_{{ name }}_bse_{{ loop.index }}:
         {%- endif %}
         # Do not run if there is True in the marker file (bootstrap already executed)
         - unless:
-            - "grep -s -q True /tmp/salt_lxd_bootstraped_{{ remotename }}_{{ name }}"
+            - "grep -s -q True /tmp/salt_lxd_bootstrapped_{{ remotename }}_{{ name }}"
 
       {%- endfor %}
 
@@ -178,8 +178,8 @@ lxd_container_{{ remotename }}_{{ name }}_make_executed:
     {%- else %}
         - m_name: "{{ name }}"
     {%- endif %}
-        - src: "salt://lxd/files/salt_lxd_bootstraped"
-        - dst: "/etc/salt_lxd_bootstraped"
+        - src: "salt://lxd/files/salt_lxd_bootstrapped"
+        - dst: "/etc/salt_lxd_bootstrapped"
         - mode: 0600
         - remote_addr: "{{ remote.remote_addr }}"
         - cert: "{{ remote.cert }}"
